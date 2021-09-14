@@ -32,6 +32,20 @@ const resolvers = {
             }
             const token = signToken(user);
             res.json({ token, user });
+        },
+        saveBook: async (parent, { user, body }) => {
+            console.log(user);
+            try {
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: user._id },
+                    { $addToSet: { savedBooks: body } },
+                    { new: true, runValidators: true }
+                );
+                return res.json(updatedUser);
+            } catch (err) {
+                console.log(err);
+                return res.status(400).json(err);
+            }
         }
     }
 }
