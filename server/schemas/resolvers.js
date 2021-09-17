@@ -10,41 +10,44 @@ const resolvers = {
     },
 
     Mutation: {
-        login: async (parent, { body }) => {
+        login: async (parent, body) => {
+            console.log(body)
             const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
             if (!user) {
-                return res.status(400).json({ message: "Can't find this user" });
+                return { message: "Can't find this user" };
             }
 
             const correctPw = await user.isCorrectPassword(body.password);
 
             if (!correctPw) {
-                return res.status(400).json({ message: 'Wrong password!' });
+                return { message: 'Wrong password!' };
             }
             const token = signToken(user);
-            res.json({ token, user });
+            return { token, user };
         },
-        addUser: async (parent, { body }) => {
+        addUser: async (parent, body) => {
+            console.log(body)
             const user = await User.create(body);
 
             if (!user) {
-                return res.status(400).json({ message: 'Something is wrong!' });
+                return { message: 'Something is wrong!' };
             }
+
             const token = signToken(user);
-            res.json({ token, user });
+            return { token, user };
         },
-        saveBook: async (parent, { user, body }) => {
-            console.log(user);
+        saveBook: async (parent, args) => {
+            console.log(args);
             try {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: user._id },
                     { $addToSet: { savedBooks: body } },
                     { new: true, runValidators: true }
                 );
-                return res.json(updatedUser);
+                return updatedUser;
             } catch (err) {
                 console.log(err);
-                return res.status(400).json(err);
+                return err
             }
         },
         removeBook: async (parent, { user, params }) => {
@@ -54,9 +57,9 @@ const resolvers = {
                 { new: true }
             );
             if (!updatedUser) {
-                return res.status(404).json({ message: "Couldn't find user with this id!" });
+                return { message: "Couldn't find user with this id!" };
             }
-            return res.json(updatedUser);
+            return updatedUser;
         }
     }
 }
