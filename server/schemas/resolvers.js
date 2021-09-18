@@ -4,15 +4,15 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        me: async (parent, { user = null, params }) => {
-            return User.findOne({ $or: [{ _id: user ? user._id : params.id }, { username: params.username }] })
+        me: async (parent, args, {user}) => {
+            return User.findOne({ _id: user._id})
         }
     },
 
     Mutation: {
         login: async (parent, body) => {
             console.log(body)
-            const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
+            const user = await User.findOne({ email: body.email });
             if (!user) {
                 return { message: "Can't find this user" };
             }
@@ -23,6 +23,7 @@ const resolvers = {
                 return { message: 'Wrong password!' };
             }
             const token = signToken(user);
+            console.log(token, user)
             return { token, user };
         },
         addUser: async (parent, body) => {

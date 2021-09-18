@@ -32,9 +32,10 @@ const SignupForm = () => {
     }
 
     try {
-      const { token, user } = await createUser(userFormData);
+      const { data } = await createUser({variables: userFormData});
+      const {token, user} = data.addUser
 
-      if (!token && !user) {
+      if (!token || !user) {
         throw new Error('something went wrong!');
       }
 
