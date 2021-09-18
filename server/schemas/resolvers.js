@@ -11,7 +11,6 @@ const resolvers = {
 
     Mutation: {
         login: async (parent, body) => {
-            console.log(body)
             const user = await User.findOne({ email: body.email });
             if (!user) {
                 return { message: "Can't find this user" };
@@ -23,11 +22,9 @@ const resolvers = {
                 return { message: 'Wrong password!' };
             }
             const token = signToken(user);
-            console.log(token, user)
             return { token, user };
         },
         addUser: async (parent, body) => {
-            console.log(body)
             const user = await User.create(body);
 
             if (!user) {
@@ -38,7 +35,6 @@ const resolvers = {
             return { token, user };
         },
         saveBook: async (parent, args, {user}) => {
-            console.log(args, user)
             try {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: user._id },
@@ -47,11 +43,11 @@ const resolvers = {
                 );
                 return updatedUser;
             } catch (err) {
-                console.log(err);
                 return err
             }
         },
         removeBook: async (parent, args, {user}) => {
+            console.log(args)
             const updatedUser = await User.findOneAndUpdate(
                 { _id: user._id },
                 { $pull: { savedBooks: { bookId: args.bookId } } },
