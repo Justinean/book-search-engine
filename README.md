@@ -18,7 +18,7 @@ Go to this [link](https://book-search-engine-appli.herokuapp.com/).
 
 ![Profile](client/public/images/ss1.png)
 
-![Search](client/public/images/ss2.png)
+![Search](client/public/images/ss2.PNG)
 
 
 
