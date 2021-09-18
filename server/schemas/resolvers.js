@@ -5,7 +5,7 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
     Query: {
         me: async (parent, args, {user}) => {
-            return User.findOne({ _id: user._id})
+            return User.findOne({ _id: user._id}).populate('savedBooks')
         }
     },
 
@@ -51,10 +51,10 @@ const resolvers = {
                 return err
             }
         },
-        removeBook: async (parent, { user, params }) => {
+        removeBook: async (parent, args, {user}) => {
             const updatedUser = await User.findOneAndUpdate(
                 { _id: user._id },
-                { $pull: { savedBooks: { bookId: params.bookId } } },
+                { $pull: { savedBooks: { bookId: args.bookId } } },
                 { new: true }
             );
             if (!updatedUser) {
