@@ -16,11 +16,11 @@ This is a book search engine using the google books api. You can create a profil
 
 Go to this [link](https://book-search-engine-appli.herokuapp.com/).
 
-![About me](public/images/ss1.png)
+![Profile](public/images/ss1.png)
 
-![Portfolio](public/images/ss2.png)
+![Search](public/images/ss2.png)
 
-![Resume](public/images/ss3.png)
+
 
 # License:
 
