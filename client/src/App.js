@@ -8,6 +8,9 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 const client = new ApolloClient({
   uri: '/graphql',
   cache: new InMemoryCache(),
+  headers: {
+    authorization: localStorage.getItem('id_token') || '',
+  }
 });
 
 function App() {
