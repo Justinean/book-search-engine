@@ -16,9 +16,9 @@ This is a book search engine using the google books api. You can create a profil
 
 Go to this [link](https://book-search-engine-appli.herokuapp.com/).
 
-![Profile](public/images/ss1.png)
+![Profile](client/public/images/ss1.png)
 
-![Search](public/images/ss2.png)
+![Search](client/public/images/ss2.png)
 
 
 
