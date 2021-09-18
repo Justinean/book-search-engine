@@ -38,8 +38,6 @@ const SignupForm = () => {
       if (!token || !user) {
         throw new Error('something went wrong!');
       }
-
-      console.log(user);
       Auth.login(token);
     } catch (err) {
       console.error(err);

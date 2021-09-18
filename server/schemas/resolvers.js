@@ -47,7 +47,6 @@ const resolvers = {
             }
         },
         removeBook: async (parent, args, {user}) => {
-            console.log(args)
             const updatedUser = await User.findOneAndUpdate(
                 { _id: user._id },
                 { $pull: { savedBooks: { bookId: args.bookId } } },
